@@ -1,21 +1,34 @@
 ## Put comments here that give an overall description of what your
 ## functions do
 
-## Write a short comment describing this function
+#Create a special "matrix", which is a list containing
+## a function to
+##   - set the value of the matrix
+##   - get the value of the matrix
+##   - setinverse the value of the inverse matrix
+##   - getinverse the value of the inverse matrix
 
 makeCacheMatrix <- function(x = matrix()) {
 # define the cache m
-        m <- NULL
+        cache <- NULL
+        
         set <- function(y) {
                 x <<- y # assign the input matrix y to the variable x
-                m <<- NULL # re-initialize m to null
+                cache <<- NULL # re-initialize cache to null
         }
-        get <- function() x # return the matrix x
-        setinverse <- function(inverse) m <<- inverse # set the cache m equal to inverse of x
-        getinverse <- function() m # return the cached inverse of x
-        list(set = set, get = get,
-             setinverse = setinverse,
-             getinverse = getinverse)
+        get <- function()# return the matrix x
+        {
+                x
+        }
+        setinverse <- function(inverse)# set the cache m equal to inverse of x
+        { 
+                m <<- inverse
+        } 
+        getinverse <- function()  # return the cached inverse of x
+        {       
+                m
+        }
+        list(set = set, get = get, setinverse = setinverse, getinverse = getinverse)
 }
 }
 # The following function calculates the inverse of the special "matrix" created
@@ -27,13 +40,15 @@ makeCacheMatrix <- function(x = matrix()) {
 
 cacheSolve <- function(x, ...) {
         # Return a matrix which is the inverse of 'x'
-        m <- x$getinverse()
-        if(!is.null(m)) {
+        cache <- x$getinverse()
+        if(!is.null(cache))
+        {
                 message("getting cached data")
-                return(m)
+                return(cache)
         }
         data <- x$get()
-        m <- solve(data, ...)
-        x$setinverse(m)
-        m
+        cache <- solve(data, ...)
+        x$setinverse(cache)
+       # return the inverse
+        cache
 }
